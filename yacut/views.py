@@ -3,13 +3,15 @@ import string
 
 from flask import flash, redirect, render_template, url_for
 
-from . import app, db
-from .forms import URLForm
-from .models import URLMap
+from yacut import app, db
+from yacut.forms import URLForm
+from yacut.models import URLMap
 
 
-def generate_seq(length=6):
-    """Функция генерации случайной короткой части длинной 6 символов."""
+def get_unique_short_id(length=6):
+    """
+    Алгоритм формирования коротких идентификаторов переменной длины.
+    """
     seq = string.ascii_letters + string.digits
     if not URLMap.query.filter_by(short=seq).first():
         return ''.join(random.choices(seq, k=length))
@@ -17,10 +19,10 @@ def generate_seq(length=6):
 
 @app.route('/', methods=['GET', 'POST'])
 def add_url_view():
-    """Функция записи ссылок в БД"""
+    """Форма на главной странице."""
     form = URLForm()
     if form.validate_on_submit():
-        short = form.custom_id.data or generate_seq()
+        short = form.custom_id.data or get_unique_short_id()
         url = URLMap(
             original=form.original_link.data,
             short=short
@@ -33,6 +35,6 @@ def add_url_view():
 
 @app.route('/<string:short>')
 def url_view(short):
-    """Функция 'склеивания' адреса сайта с составной частью(short)."""
+    """Функция перенаправления с короткой ссылки на длинную."""
     return redirect(
         URLMap.query.filter_by(short=short).first_or_404().original)

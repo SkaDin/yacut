@@ -6,6 +6,8 @@ from yacut.models import URLMap
 
 
 class URLForm(FlaskForm):
+    """Класс формы проекта."""
+
     original_link = URLField(
         'Ваша длинная ссылка',
         validators=[DataRequired(message='Обязательное поле'), URL(
@@ -21,5 +23,6 @@ class URLForm(FlaskForm):
     submit = SubmitField('Создать')
 
     def validate_custom_id(self, field):
+        """Метод проверки уникальности поля."""
         if field.data and URLMap.query.filter_by(short=field.data).first():
-            raise ValidationError(f'Ссылка {field.data} уже занята!')
+            raise ValidationError(f'Имя {field.data} уже занято!')
