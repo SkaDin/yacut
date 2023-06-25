@@ -1,6 +1,11 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField, URLField
-from wtforms.validators import URL, DataRequired, Length, Optional, Regexp, ValidationError
+from wtforms.validators import (URL,
+                                DataRequired,
+                                Length,
+                                Optional,
+                                Regexp,
+                                ValidationError)
 
 from yacut.models import URLMap
 
