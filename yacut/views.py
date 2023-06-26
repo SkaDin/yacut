@@ -8,7 +8,7 @@ from yacut.models import URLMap
 from yacut.contants import SHORT_URL_LENGTH
 
 
-def get_unique_short_id(length=SHORT_URL_LENGTH):
+def get_unique_short_id():
     """
     Алгоритм формирования коротких идентификаторов переменной длины.
     """
