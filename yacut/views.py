@@ -1,20 +1,32 @@
-import random
-import string
+import uuid
 
 from flask import flash, redirect, render_template, url_for
 
 from yacut import app, db
 from yacut.forms import URLForm
 from yacut.models import URLMap
+from yacut.contants import SHORT_URL_LENGTH
 
 
-def get_unique_short_id(length=6):
+def get_unique_short_id(length=SHORT_URL_LENGTH):
     """
     Алгоритм формирования коротких идентификаторов переменной длины.
     """
-    seq = string.ascii_letters + string.digits
-    if not URLMap.query.filter_by(short=seq).first():
-        return ''.join(random.choices(seq, k=length))
+    # seq = string.ascii_letters + string.digits
+    # Мы создаём список всех имеющихся url-адресов.
+    # existing_ids = {url.short for url in existing_urls}
+    # while True:
+    #    new_short_id = ''.join(random.choices(seq, k=length))
+    #    if new_short_id not in existing_ids:
+    #         Если такого id в БД нет,
+    #         прерываем цикл, возвращая сгенерированный id.
+    #        return new_short_id
+
+    # Я решил использовать бибилотеку uuid по 3 причинам:
+    # 1 - библиотека обеспечивает уникальность каждого короткого id;
+    # 2 - меньшая потенциальная нагрузка на сервер;
+    # 3 - читабельность кода;
+    return str(uuid.uuid4().hex)[:SHORT_URL_LENGTH]
 
 
 @app.route('/', methods=['GET', 'POST'])
