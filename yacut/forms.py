@@ -22,8 +22,7 @@ class URLForm(FlaskForm):
         'Ваш вариант короткой ссылки',
         validators=[Length(1, 16), Optional(), Regexp(
             r'^[A-Za-z0-9]+$',
-            message='Можно использовать только [A-Za-z0-9] '
-                    'длинной не более 6 символов')]
+            message='Можно использовать только [A-Za-z0-9]')]
     )
     submit = SubmitField('Создать')
 
