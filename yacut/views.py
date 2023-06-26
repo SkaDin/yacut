@@ -13,7 +13,7 @@ def get_unique_short_id():
     Алгоритм формирования коротких идентификаторов переменной длины.
     """
     # seq = string.ascii_letters + string.digits
-    # Мы создаём список всех имеющихся url-адресов.
+    # Мы создаём множество всех имеющихся url-адресов.
     # existing_ids = {url.short for url in existing_urls}
     # while True:
     #    new_short_id = ''.join(random.choices(seq, k=length))
