@@ -24,9 +24,6 @@ def get_unique_short_id(length=SHORT_URL_LENGTH):
             # Если такого id в БД нет,
             # прерываем цикл, возвращая сгенерированный id.
             return new_short_id
-        else:
-            # Если же коллизия произошла - продолжаем цикл.
-            continue
 
 
 @app.route('/', methods=['GET', 'POST'])
